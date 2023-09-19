@@ -1,5 +1,4 @@
 import { getCategories, postNewProject } from "../api/api.js";
-import { closeModal } from "./closeModal.js";
 import { displayGalleryModal } from "./displayGalleryModal.js";
 import { previewModalPicture } from "./previewModalPicture.js";
 
@@ -7,7 +6,7 @@ const modalAddPhoto = `
                                 <div class="modal__content__container">
                                   <h2>Ajout Photo</h2>
 
-                                  <form action="#">
+                                  <form action="#" id="submit-project">
                                   <div class="submit__photos">
                                     <img src="./assets/images/icone.svg" alt="" id="preview">
                                     <label for="file">+ Ajouter photo</label>
@@ -28,7 +27,7 @@ const modalAddPhoto = `
                                 
                                 <div><p class="preview__postproject"></p></div>
                                 <div class="underline"></div>
-                                <button type="submit" class="btn--validate">Valider</button>
+                                <button type="submit" class="btn--validate" disabled>Valider</button>
                             </div>
                             </div>
                        `
@@ -36,62 +35,45 @@ const modalAddPhoto = `
 
 
 
-
 export const addPictureToGalleryModal = async (modal, savebar, modalContent, arrowLeft) => {
-    modalContent.innerHTML = modalAddPhoto;
-    arrowLeft.style.visibility = "visible";
 
-    const categories = await getCategories();
-    console.log(categories)
+  modalContent.innerHTML = modalAddPhoto;
+  arrowLeft.style.visibility = "visible";
+  
+  const categories = await getCategories();
+  const submitForm = document.querySelector("#submit-project");
+  const validateButton = document.querySelector(".btn--validate");
+  const catList = document.querySelector("#cat");
 
-    document.querySelector(".fa-arrow-left").addEventListener("click", () => {
-        displayGalleryModal(modal, savebar);
-      })
 
-    document.getElementById("file").addEventListener("change", (e) => previewModalPicture(e));
+  document.querySelector(".fa-arrow-left").addEventListener("click", () => {
+    displayGalleryModal(modal, savebar);
+  });
+  
+  document.querySelector("#file").addEventListener("change", (e) => previewModalPicture(e));
+  
+  categories.forEach((cat) => {
+      const option = document.createElement("option");
+      option.value = cat.id;
+      option.innerText = cat.name;
+      catList.appendChild(option);
+  });
 
-    const catList = document.querySelector("#cat");
-    categories.forEach((cat) => {
-        const option = document.createElement("option");
-        option.value = cat.id; // Set the value property
-        option.innerText = cat.name; // Set the innerText property
-        catList.appendChild(option);
+      submitForm.addEventListener("change", () => {
+          const catIndex = catList.value;
+          const titleValue = document.querySelector("#title").value.trim();
+          const imageValue = document.querySelector("#file").files[0];
+          if (catIndex && titleValue && imageValue) {
+              validateButton.removeAttribute("disabled")
+              validateButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                postNewProject(catIndex, titleValue, imageValue);
+                modal.style.display = "none";
+                savebar.style.display = "none";
+              }
+      )}
       });
 
-    const validateButton = document.querySelector(".btn--validate");
 
-    validateButton.addEventListener("click", (event) => 
-    {
-        event.preventDefault();
-
-        const catIndex = catList.value;
-        const titleValue = document.querySelector("#title").value.trim(); // Trim the title value
-        const imageValue = document.querySelector("#file").files[0];
-
-        const validateInput = (inputValue, inputElement) => {
-        const isValid = inputValue !== "" && inputValue!==undefined;
-        inputElement.style.border = isValid ? "none" : "1px solid red";
-        return isValid;
-        }
-
-        const isImageValid = validateInput(imageValue, document.querySelector(".submit__photos"));
-        const isTitleValid = validateInput(titleValue, document.querySelector("#title"));
-        const isCatIndexValid = validateInput(catIndex, catList);
-
-        if (isImageValid && isCatIndexValid && isTitleValid) 
-        {
-            postNewProject(catIndex, titleValue, imageValue);
-            modal.style.display = "none";
-            savebar.style.display ="none";
-        } 
-        
-        else 
-        
-        {
-            console.log("Fill in the fields");
-        }
-
-    })
-
-
-}
+  }
+      

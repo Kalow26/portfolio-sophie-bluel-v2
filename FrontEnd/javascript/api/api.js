@@ -9,10 +9,12 @@ export const login = async (user) => {
         });
         const response = await userInfo.json();
         if (response) {
+          console.log(response)
             return (response)
         }
     } catch (error) {
-        console.log(error)
+      console.error(error.message)
+      return (error)
     }
 }
 
