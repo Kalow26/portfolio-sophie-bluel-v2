@@ -20,12 +20,12 @@ window.addEventListener("DOMContentLoaded", () => {
 })
 
 
-export async function fetchData() {
+export async function fetchWorks() {
   const data = await getWorks();
   AllWorks = data;
   renderGalleryOnScreen(AllWorks);
 }
 
-fetchData();
+fetchWorks();
 createFilterButtons()
   

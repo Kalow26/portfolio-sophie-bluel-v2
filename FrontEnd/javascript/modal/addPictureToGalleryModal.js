@@ -30,50 +30,52 @@ const modalAddPhoto = `
                                 <button type="submit" class="btn--validate" disabled>Valider</button>
                             </div>
                           
-                       `
-                        ;
-
-
-
-export const addPictureToGalleryModal = async (modal, savebar, modalContent, arrowLeft) => {
-
+                       `;
+export const addPictureToGalleryModal = async (
+  modal,
+  savebar,
+  modalContent,
+  arrowLeft
+) => {
   modalContent.innerHTML = modalAddPhoto;
   arrowLeft.style.visibility = "visible";
-  
+
   const categories = await getCategories();
   const submitForm = document.querySelector("#submit-project");
   const validateButton = document.querySelector(".btn--validate");
   const catList = document.querySelector("#cat");
 
-
   document.querySelector(".fa-arrow-left").addEventListener("click", () => {
     displayGalleryModal(modal, savebar);
   });
-  
-  document.querySelector("#file").addEventListener("change", (e) => previewModalPicture(e));
-  
+  document
+    .querySelector("#file")
+    .addEventListener("change", (e) => previewModalPicture(e));
+
   categories.forEach((cat) => {
-      const option = document.createElement("option");
-      option.value = cat.id;
-      option.innerText = cat.name;
-      catList.appendChild(option);
+    const option = document.createElement("option");
+    option.value = cat.id;
+    option.innerText = cat.name;
+    catList.appendChild(option);
   });
 
-      submitForm.addEventListener("change", () => {
-          const catIndex = catList.value;
-          const titleValue = document.querySelector("#title").value.trim();
-          const imageValue = document.querySelector("#file").files[0];
-          if (catIndex && titleValue && imageValue) {
-              validateButton.removeAttribute("disabled")
-              validateButton.addEventListener("click", (event) => {
-                event.preventDefault();
-                postNewProject(catIndex, titleValue, imageValue);
-                modal.style.display = "none";
-                savebar.style.display = "none";
-              }
-      )}
+  submitForm.addEventListener("change", () =>
+    handleFormChange(catList, validateButton, modal, savebar)
+  );
+
+  function handleFormChange(catList, validateButton, modal, savebar) {
+    const catIndex = catList.value;
+    const titleValue = document.querySelector("#title").value.trim();
+    const imageValue = document.querySelector("#file").files[0];
+    
+    if (catIndex && titleValue && imageValue) {
+      validateButton.removeAttribute("disabled");
+      validateButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        postNewProject(catIndex, titleValue, imageValue);
+        modal.style.display = "none";
+        savebar.style.display = "none";
       });
-
-
+    }
   }
-      
+};
