@@ -13,8 +13,7 @@ export const login = async (user) => {
             return (response)
         }
     } catch (error) {
-      console.error(error.message)
-      return (error)
+      console.error(error)
     }
 }
 

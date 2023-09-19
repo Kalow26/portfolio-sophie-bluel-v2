@@ -2,10 +2,8 @@ import { getCategories, postNewProject } from "../api/api.js";
 import { displayGalleryModal } from "./displayGalleryModal.js";
 import { previewModalPicture } from "./previewModalPicture.js";
 
-const modalAddPhoto = `	
-                               
+const modalAddPhoto = `	         
                                   <h2>Ajout Photo</h2>
-
                                   <form action="#" id="submit-project">
                                   <div class="submit__photos">
                                     <img src="./assets/images/icone.svg" alt="" id="preview">
@@ -24,13 +22,10 @@ const modalAddPhoto = `
                                         </select>
                                   </div>
                                 </form>
-                                
-                                <div><p class="preview__postproject"></p></div>
                                 <div class="underline"></div>
                                 <button type="submit" class="btn--validate" disabled>Valider</button>
-                            </div>
-                          
                        `;
+                       
 export const addPictureToGalleryModal = async (
   modal,
   savebar,
@@ -67,7 +62,7 @@ export const addPictureToGalleryModal = async (
     const catIndex = catList.value;
     const titleValue = document.querySelector("#title").value.trim();
     const imageValue = document.querySelector("#file").files[0];
-    
+
     if (catIndex && titleValue && imageValue) {
       validateButton.removeAttribute("disabled");
       validateButton.addEventListener("click", (event) => {

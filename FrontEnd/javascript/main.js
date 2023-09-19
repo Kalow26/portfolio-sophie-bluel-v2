@@ -21,8 +21,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 export async function fetchWorks() {
-  const data = await getWorks();
-  AllWorks = data;
+  AllWorks = await getWorks();
   renderGalleryOnScreen(AllWorks);
 }
 
