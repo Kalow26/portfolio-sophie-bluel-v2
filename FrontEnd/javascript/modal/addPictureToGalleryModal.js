@@ -3,7 +3,7 @@ import { displayGalleryModal } from "./displayGalleryModal.js";
 import { previewModalPicture } from "./previewModalPicture.js";
 
 const modalAddPhoto = `	
-                                <div class="modal__content__container">
+                               
                                   <h2>Ajout Photo</h2>
 
                                   <form action="#" id="submit-project">
@@ -29,7 +29,7 @@ const modalAddPhoto = `
                                 <div class="underline"></div>
                                 <button type="submit" class="btn--validate" disabled>Valider</button>
                             </div>
-                            </div>
+                          
                        `
                         ;
 

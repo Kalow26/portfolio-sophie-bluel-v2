@@ -23,7 +23,6 @@
 }
 
 .modal__content .fa-xmark, .fa-arrow-left{
-	cursor: pointer;
 	display: flex;
 	justify-content: flex-end;
 	font-size: 30px;
@@ -32,7 +31,7 @@
 	padding-left: 30px;
 }
 
-.fa-trash-can {
+.fa-solid {
 	cursor: pointer;
 }
 

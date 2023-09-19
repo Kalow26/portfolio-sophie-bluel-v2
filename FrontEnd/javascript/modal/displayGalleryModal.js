@@ -1,6 +1,5 @@
 import { deleteProject } from "../api/api.js";
 import { AllWorks } from "../main.js";
-import { selectProjectstoDelete } from "../projectManagement/selectProjectstoDelete.js";
 import { addPictureToGalleryModal } from "./addPictureToGalleryModal.js";
 import { closeModal } from "./closeModal.js";
 
@@ -44,7 +43,7 @@ export const displayGalleryModal = (modal, savebar) => {
         deleteProject(projectId);
     })
 });
-  closeModal(modal, savebar);
+  closeModal(modal, savebar, modalContent);
 
   document
   .querySelector(".btn--addphoto")
