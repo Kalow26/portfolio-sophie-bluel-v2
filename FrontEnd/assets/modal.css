@@ -36,7 +36,6 @@
 }
 
 
-
 .modal__content .fa-arrow-left {
 	cursor: pointer;
 	display: flex;
@@ -46,23 +45,23 @@
 	padding-right: 30px;
 }
 
-.modal__content__container {
-	display: flex;
+.modal__content__container-gallery, .modal__content__container-addwork  {
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: nowrap;
 	align-content: center;
+	display: none;
 }
 
-.modal__content__container h2{
+.modal__content__container-gallery, .modal__content__container-addwork h2{
 	font-family: 'Work Sans';
 	font-size: 26px;
 	color: #000;
 	font-weight: 400;
 }
 
-.modal__content__container form {
+.modal__content__container-addwork form {
 	width: 420px;
 	padding: 60px 105px 50px;
 }

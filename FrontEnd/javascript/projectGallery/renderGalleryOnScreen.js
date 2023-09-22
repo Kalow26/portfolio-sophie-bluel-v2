@@ -1,6 +1,5 @@
-export const renderGalleryOnScreen = async (works) => {
+export const renderGalleryOnScreen = async (works, galleryContainer) => {
 
-        const galleryContainer = document.querySelector(".gallery");
         galleryContainer.innerHTML = "";
     
         works.forEach((work) => {

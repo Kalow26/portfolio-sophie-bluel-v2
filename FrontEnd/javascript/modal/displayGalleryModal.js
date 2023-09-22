@@ -1,24 +1,11 @@
 import { deleteProject } from "../api/api.js";
-import { AllWorks } from "../main.js";
-import { addPictureToGalleryModal } from "./addPictureToGalleryModal.js";
-import { closeModal } from "./closeModal.js";
 
 
-const modalContent = document.querySelector(".modal__content__container");
-const arrowLeft = document.querySelector(".fa-arrow-left");
-
-const modalGallery = `
-                          <h2>Galerie Photo</h2>
-                          <div class="pictures__container"></div>
-                          <div class="underline"></div>
-                          <button class="btn--addphoto">Ajouter une photo</button>
-                
-                      `;
-
-export const displayGalleryModal = (modal, savebar) => {
-  arrowLeft.style.visibility = "hidden";
-  modalContent.innerHTML = modalGallery;
+export const displayGalleryModal = (AllWorks, modal, editionBar, modalContentGallery, arrowLeft, modalContentSubmitPhotos) => {
+  modalContentGallery.style.display="flex";
   const picturesContainer = document.querySelector(".pictures__container");
+
+  arrowLeft.style.visibility = "hidden";
   picturesContainer.innerHTML = "";
 
   AllWorks.forEach((work) => {
@@ -31,8 +18,12 @@ export const displayGalleryModal = (modal, savebar) => {
                         </div>
                        `;
     picturesContainer.appendChild(figure);
-   
+    handleDeleteProject()
   })
+};
+
+
+const handleDeleteProject = () => {
 
   const deleteIcon = document.querySelectorAll(".fa-trash-can");
 
@@ -42,13 +33,8 @@ export const displayGalleryModal = (modal, savebar) => {
       const projectId = icon.getAttribute("name");
         deleteProject(projectId);
     })
-});
-  closeModal(modal, savebar, modalContent);
-
-  document
-  .querySelector(".btn--addphoto")
-  .addEventListener("click", () => {
-    addPictureToGalleryModal(modal, savebar, modalContent, arrowLeft);
-
   });
-};
+
+  
+  
+}

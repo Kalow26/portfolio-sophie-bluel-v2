@@ -1,17 +1,11 @@
-export const closeModal = (modal, savebar, modalContent) => {
+export const handleCloseModal = (...allContainers) => {
+   
     document
-        .querySelector(".fa-xmark")
-        .addEventListener("click", () => {
-            savebar.style.display = "none"
-            modalContent.innerHTML = "";
-            modal.style.display = "none"
+        .querySelector(".fa-xmark").addEventListener("click", () => {
+
+            for (const elem of allContainers) {
+                elem.style.display="none"
+            }
         })
 
-   if (!modal) {
-    document.RemoveEventListener("click", () => {
-            savebar.style.display = "none"
-            modalContent.innerHTML = "";
-            modal.style.display = "none"
-        })
-   }     
 }

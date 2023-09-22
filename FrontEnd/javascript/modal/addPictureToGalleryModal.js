@@ -2,52 +2,31 @@ import { getCategories, postNewProject } from "../api/api.js";
 import { displayGalleryModal } from "./displayGalleryModal.js";
 import { previewModalPicture } from "./previewModalPicture.js";
 
-const modalAddPhoto = `	         
-                                  <h2>Ajout Photo</h2>
-                                  <form action="#" id="submit-project">
-                                  <div class="submit__photos">
-                                    <img src="./assets/images/icone.svg" alt="" id="preview">
-                                    <label for="file">+ Ajouter photo</label>
-                                    <input type="file" name="file" id="file" accept=".jpg, .png">
-                                    <span>jpg, png : 4mo max</span>
-                                  </div>
-                                  <div class="title">
-                                    <label for="title">Titre</label>
-                                    <input type="text" name="title" id="title" onfocus="this.value=''">
-                                  </div>
-                                  <div class="title">
-                                    <label for="cat">Catégorie</label>
-                                        <select name="cat" id="cat">
-                                            <option value="">Choisissez une catégorie</option>
-                                        </select>
-                                  </div>
-                                </form>
-                                <div class="underline"></div>
-                                <button type="submit" class="btn--validate" disabled>Valider</button>
-                       `;
                        
-export const addPictureToGalleryModal = async (
+export const addPictureToGalleryModal = (
   modal,
-  savebar,
-  modalContent,
-  arrowLeft
+  editionBar,
+  modalContentGallery,
+  arrowLeft,
+  AllCategories,
+  modalContentSubmitPhotos
 ) => {
-  modalContent.innerHTML = modalAddPhoto;
+
+  modalContentSubmitPhotos.style.display="flex"
+
   arrowLeft.style.visibility = "visible";
 
-  const categories = await getCategories();
   const submitForm = document.querySelector("#submit-project");
   const validateButton = document.querySelector(".btn--validate");
   const catList = document.querySelector("#cat");
+  catList.innerHTML="";
 
-  document.querySelector(".fa-arrow-left").addEventListener("click", () => {
-    displayGalleryModal(modal, savebar);
-  });
+
   document
     .querySelector("#file")
     .addEventListener("change", (e) => previewModalPicture(e));
 
-  categories.forEach((cat) => {
+  AllCategories.forEach((cat) => {
     const option = document.createElement("option");
     option.value = cat.id;
     option.innerText = cat.name;
@@ -55,10 +34,11 @@ export const addPictureToGalleryModal = async (
   });
 
   submitForm.addEventListener("change", () =>
-    handleFormChange(catList, validateButton, modal, savebar)
+    handleFormChange(catList, validateButton, modal, editionBar)
   );
 
-  function handleFormChange(catList, validateButton, modal, savebar) {
+
+  function handleFormChange(catList, validateButton, modal, editionBar) {
     const catIndex = catList.value;
     const titleValue = document.querySelector("#title").value.trim();
     const imageValue = document.querySelector("#file").files[0];
@@ -69,8 +49,11 @@ export const addPictureToGalleryModal = async (
         event.preventDefault();
         postNewProject(catIndex, titleValue, imageValue);
         modal.style.display = "none";
-        savebar.style.display = "none";
+        editionBar.style.display = "none";
       });
     }
   }
 };
+
+
+

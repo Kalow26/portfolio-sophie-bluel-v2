@@ -79,9 +79,37 @@
 				<i class="fa-solid fa-arrow-left"></i>
 				<i class="fa-solid fa-xmark"></i>
 			</div>
-			<div class="modal__content__container">
+			<div class="modal__content__container-gallery inactive">
+
+				<h2>Galerie Photo</h2>
+                <div class="pictures__container"></div>
+                <div class="underline"></div>
+                <button class="btn--addphoto">Ajouter une photo</button>
 				
-				
+			</div>
+
+			<div class="modal__content__container-addwork inactive">
+				<h2>Ajout Photo</h2>
+				<form action="#" id="submit-project">
+				<div class="submit__photos">
+				  <img src="./assets/images/icone.svg" alt="" id="preview">
+				  <label for="file">+ Ajouter photo</label>
+				  <input type="file" name="file" id="file" accept=".jpg, .png">
+				  <span>jpg, png : 4mo max</span>
+				</div>
+				<div class="title">
+				  <label for="title">Titre</label>
+				  <input type="text" name="title" id="title" onfocus="this.value=''">
+				</div>
+				<div class="title">
+				  <label for="cat">Catégorie</label>
+					  <select name="cat" id="cat">
+						  <option value="">Choisissez une catégorie</option>
+					  </select>
+				</div>
+			  </form>
+			  <div class="underline"></div>
+			  <button type="submit" class="btn--validate" disabled>Valider</button>
 			</div>
 		</div>
 	</div>
