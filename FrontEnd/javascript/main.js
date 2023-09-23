@@ -18,8 +18,9 @@ const modalContentGallery = document.querySelector(".modal__content__container-g
 const modalContentSubmitPhotos = document.querySelector(".modal__content__container-addwork");
 const arrowLeft = document.querySelector(".fa-arrow-left");
 const validateButton = document.querySelector(".btn--validate");
+const addPhotoButton =  document.querySelector(".btn--addphoto");
 
-export let appInitialized = false
+
 // ...
 
 export let AllWorks = []; // Initialisez les données vides au début
@@ -32,13 +33,13 @@ const initialize = async () => {
   // ...
   createFilterButtons(AllCategories, AllWorks, filterButtonsContainer, galleryContainer)
   renderGalleryOnScreen(AllWorks, galleryContainer)
-  appInitialized= true
+ 
 };
 
-if (appInitialized === false) {
+
 
   initialize()
-}
+
 
 
   if (sessionStorage.token && sessionStorage.id) {
@@ -52,12 +53,11 @@ if (appInitialized === false) {
       handleCloseModal(modal, editionBar, modalContentSubmitPhotos, modalContentGallery)
       displayGalleryModal(AllWorks, modal, editionBar, modalContentGallery, arrowLeft,);
     })
-    document
-    .querySelector(".btn--addphoto")
-    .addEventListener("click", () => {
+   
+    addPhotoButton.addEventListener("click", () => {
       modalContentGallery.style.display="none";
-      addPictureToGalleryModal(modal, editionBar, modalContentGallery, arrowLeft, AllCategories, modalContentSubmitPhotos);
-      console.log("travaux" , AllWorks, "cat", AllCategories)
+      addPictureToGalleryModal(arrowLeft, AllCategories, modalContentSubmitPhotos);
+      
       arrowLeft.addEventListener("click", () => {
         modalContentSubmitPhotos.style.display="none";
         displayGalleryModal(AllWorks, modal, editionBar, modalContentGallery, arrowLeft, modalContentSubmitPhotos);

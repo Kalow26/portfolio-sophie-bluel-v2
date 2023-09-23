@@ -1,26 +1,17 @@
-import { getCategories, postNewProject } from "../api/api.js";
-import { displayGalleryModal } from "./displayGalleryModal.js";
+import { postNewProject } from "../api/api.js";
 import { previewModalPicture } from "./previewModalPicture.js";
 
 const newFormData = []
-export const addPictureToGalleryModal = (
-  modal,
-  editionBar,
-  modalContentGallery,
-  arrowLeft,
-  AllCategories,
-  modalContentSubmitPhotos
-) => {
-  
-  modalContentSubmitPhotos.style.display="flex"
-  
+export const addPictureToGalleryModal = (arrowLeft, AllCategories, modalContentSubmitPhotos) => {
+  modalContentSubmitPhotos.style.display = "flex";
+
   arrowLeft.style.visibility = "visible";
-  
+
   const submitForm = document.querySelector("#submit-project");
   const validateButton = document.querySelector(".btn--validate");
   const catList = document.querySelector("#cat");
-  catList.innerHTML="";
-  
+  catList.innerHTML = "";
+
   validateButton.removeEventListener("click", handleValidationClick);
 
   document
@@ -35,26 +26,22 @@ export const addPictureToGalleryModal = (
   });
 
   submitForm.addEventListener("change", () =>
-    handleFormChange(catList, validateButton, modal, editionBar)
+    handleFormChange(catList, validateButton)
   );
 
-  
-
-  function handleFormChange(catList, validateButton, modal, editionBar) {
+  function handleFormChange(catList, validateButton) {
     const catIndex = catList.value;
     const titleValue = document.querySelector("#title").value.trim();
     const imageValue = document.querySelector("#file").files[0];
 
     if (catIndex && titleValue && imageValue) {
-     newFormData.push({cat :catIndex, title: titleValue, img: imageValue})
+      newFormData.push({ cat: catIndex, title: titleValue, img: imageValue });
 
-      validateButton.removeAttribute("disabled"); 
+      validateButton.removeAttribute("disabled");
       validateButton.addEventListener("click", handleValidationClick);
-      
     }
   }
-  
-}
+};
 
 export const handleValidationClick = (event) => {
   event.preventDefault();
