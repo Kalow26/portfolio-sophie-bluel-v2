@@ -31,7 +31,7 @@ const handleDeleteProject = () => {
     icon.addEventListener("click", (e) => {
         e.preventDefault();
       const projectId = icon.getAttribute("name");
-        deleteProject(projectId);
+        deleteProject(projectId)
     })
   });
 

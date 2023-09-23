@@ -75,6 +75,7 @@ export const postNewProject = async (index, title, imageFile) => {
           body: formData,
         });
         const res = await postProject.json();
+
       } catch (e) {
         console.error("error", e);
       }
