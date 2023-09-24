@@ -1,10 +1,10 @@
 import { deleteProject } from "../api/api.js";
 
 
-export const displayGalleryModal = (AllWorks, modal, editionBar, modalContentGallery, arrowLeft, modalContentSubmitPhotos) => {
+export const displayGalleryModal = (AllWorks, modalContentGallery, arrowLeft) => {
   modalContentGallery.style.display="flex";
   const picturesContainer = document.querySelector(".pictures__container");
-
+  console.log(AllWorks.length)
   arrowLeft.style.visibility = "hidden";
   picturesContainer.innerHTML = "";
 
@@ -18,8 +18,8 @@ export const displayGalleryModal = (AllWorks, modal, editionBar, modalContentGal
                         </div>
                        `;
     picturesContainer.appendChild(figure);
-    handleDeleteProject()
   })
+  handleDeleteProject()
 };
 
 

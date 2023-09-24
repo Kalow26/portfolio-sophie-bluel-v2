@@ -54,7 +54,7 @@
 	display: none;
 }
 
-.modal__content__container-gallery, .modal__content__container-addwork h2{
+.modal__content__container-gallery h2, .modal__content__container-addwork h2{
 	font-family: 'Work Sans';
 	font-size: 26px;
 	color: #000;

@@ -15,7 +15,6 @@ export const filterGallery = (AllWorks, galleryContainer) => {
           const filteredArray = AllWorks.filter(
             (work) => work.categoryId == buttonId
           );
-          console.log(filteredArray)
           renderGalleryOnScreen(filteredArray, galleryContainer);
         }
       });
