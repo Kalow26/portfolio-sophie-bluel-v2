@@ -31,29 +31,6 @@
 }
 .alert-connection {
 	color: red;
-	animation: wave 0.2s forwards;
-}
-
-@keyframes wave {
-	0% {
-		transform: translateX(-10px);
-	}
-
-	20% {
-		transform: translateX(10px);
-	}
-	40% {
-		transform: translateX(-10px);
-	}
-	60% {
-		transform: translateX(10px);
-	}
-	80% {
-		transform: translateX(-10px);
-	}
-	100% {
-		transform: translateX(0px);
-	}
 }
 
 .alert-mail {
@@ -77,6 +54,11 @@
 
 .btn--loggin {
 	margin-bottom: 37px;
+	transition: box-shadow 0.3s;
+}
+
+.btn--loggin:hover {
+	box-shadow: 7px 7px 14px 0px rgba(0, 0, 0, 0.5);
 }
 
 .login__form-button a {

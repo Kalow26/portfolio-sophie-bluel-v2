@@ -32,10 +32,10 @@ export const deleteProject = async (id) => {
     }
 }
 
-export const getWorks = async () => {
+export const getProjects = async () => {
     try {
-        const works = await fetch (`${serverUrl}/works`)
-        const response = await works.json();
+        const projects = await fetch (`${serverUrl}/works`)
+        const response = await projects.json();
         if (response) {
             return (response)
         }

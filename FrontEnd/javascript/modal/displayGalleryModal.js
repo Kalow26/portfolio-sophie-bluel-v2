@@ -3,19 +3,20 @@ import { initializeApp } from "../main.js";
 
 
 
-export const displayGalleryModal = (AllWorks, modalContentGallery, arrowLeft) => {
-  modalContentGallery.style.display="flex";
+export const displayGalleryModal = (allProjects, modalContentGallery, arrowLeft, modalContentSubmitPhotos) => {
+  modalContentSubmitPhotos.style.display = "none";
+  modalContentGallery.style.display= "flex";
   const picturesContainer = document.querySelector(".pictures__container");
   arrowLeft.style.visibility = "hidden";
   picturesContainer.innerHTML = "";
 
-  AllWorks.forEach((work) => {
+  allProjects.forEach((image) => {
     const figure = document.createElement("figure");
 
     figure.innerHTML = `
-                        <img src="${work.imageUrl}" alt="${work.title} class="gallery__image__caption" name="${work.id}">
+                        <img src="${image.imageUrl}" alt="${image.title} class="gallery__image__caption" name="${image.id}">
                         <div class="pictures__container__icons">
-                            <i class="fa-solid fa-trash-can" name="${work.id}"></i>
+                            <i class="fa-solid fa-trash-can" name="${image.id}"></i>
                         </div>
                        `;
     picturesContainer.appendChild(figure);
@@ -39,7 +40,7 @@ const handleDeleteProject = () => {
           }
           
       
-          initializeApp.getworks().then(() => {
+          initializeApp.getProjects().then(() => {
           initializeApp.renderOnScreen();
           })
         })

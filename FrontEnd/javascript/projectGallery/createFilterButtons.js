@@ -2,7 +2,7 @@
 import { filterGallery } from './filterGallery.js';
 
 
-export const createFilterButtons =  (AllCategories, AllWorks, filterButtonsContainer, galleryContainer) => {
+export const createFilterButtons =  (AllCategories, allProjects, filterButtonsContainer, galleryContainer) => {
 
     filterButtonsContainer.innerHTML = "";
 
@@ -19,6 +19,6 @@ export const createFilterButtons =  (AllCategories, AllWorks, filterButtonsConta
       filterButtonsContainer.appendChild(filterButton);
     });
 
-    filterGallery(AllWorks, galleryContainer);
+    filterGallery(allProjects, galleryContainer);
 }
 

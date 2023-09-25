@@ -5,6 +5,7 @@ import { validateForm } from "./validateForm.js";
 const email = document.querySelector("#Email");
 const password = document.querySelector("#Password");
 const loginForm = document.querySelector("#login-form");
+const loginErrorField = document.querySelector(".alert-connection");
 
 const logUser = async (e) => {
   e.preventDefault();
@@ -32,16 +33,14 @@ const logUser = async (e) => {
       sessionStorage.setItem("id", userData.userId);
       window.location.href = "../index.html";
     } else {
-      document.querySelector(
-        ".alert-connection"
-      ).innerHTML = `erreur de connection : ${
+      loginErrorField.innerHTML = `erreur de connection : ${
         userData.message === undefined
           ? "Mot de passe incorrect"
           : userData.message
       }`;
     }
   } else {
-    document.querySelector(".alert-connection").innerHTML =
+    loginErrorField.classList.innerHTML =
       "erreur saisie données";
   }
 };
