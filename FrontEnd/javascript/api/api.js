@@ -10,7 +10,6 @@ export const login = async (user) => {
         });
         const response = await userInfo.json();
         if (response) {
-          console.log(response)
             return (response)
         }
     } catch (error) {
@@ -21,7 +20,7 @@ export const login = async (user) => {
 export const deleteProject = async (id) => {
     try {
       const url =`${serverUrl}/works/${id}`
-      const request = await fetch(url, {
+       await fetch(url, {
         method: 'DELETE',
         headers: {
           'accept':'application/json',
@@ -33,10 +32,10 @@ export const deleteProject = async (id) => {
     }
 }
 
-export const getWorks = async () => {
+export const getProjects = async () => {
     try {
-        const works = await fetch (`${serverUrl}/works`)
-        const response = await works.json();
+        const projects = await fetch (`${serverUrl}/works`)
+        const response = await projects.json();
         if (response) {
             return (response)
         }
@@ -63,9 +62,8 @@ export const postNewProject = async (index, title, imageFile) => {
     formData.append("image", imageFile, imageFile.name);
     formData.append("title", title);
     formData.append("category", index);
-
-    try {
-        const postProject = await fetch(`${serverUrl}/works`, {
+    try { 
+       await fetch(`${serverUrl}/works`, {
           method: "POST",
           headers: {
             accept: "application/json",
@@ -73,8 +71,6 @@ export const postNewProject = async (index, title, imageFile) => {
           },
           body: formData,
         });
-        const res = await postProject.json();
-
       } catch (e) {
         console.error("error", e);
       }

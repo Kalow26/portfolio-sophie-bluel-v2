@@ -1,12 +1,12 @@
-export const renderGalleryOnScreen = async (works, galleryContainer) => {
+export const renderGalleryOnScreen = async (projects, galleryContainer) => {
 
         galleryContainer.innerHTML = "";
     
-        works.forEach((work) => {
+        projects.forEach((image) => {
         const figure = document.createElement("figure");
         figure.innerHTML = `
-                                <img src="${work.imageUrl}" alt="${work.title}">
-                                <figcaption>${work.title}</figcaption>
+                                <img src="${image.imageUrl}" alt="${image.title}">
+                                <figcaption>${image.title}</figcaption>
                                 `;
     
         galleryContainer.appendChild(figure);

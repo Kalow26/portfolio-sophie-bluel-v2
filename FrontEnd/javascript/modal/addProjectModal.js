@@ -1,5 +1,5 @@
 import { postNewProject } from "../api/api.js";
-import { initializeApp } from "../main.js";
+import { initializeApp, modalManagement } from "../main.js";
 import { previewModalPicture } from "./previewModalPicture.js";
 
 const submitForm = document.querySelector("#submit-project");
@@ -8,10 +8,9 @@ const projectCategoriesList = document.querySelector("#cat");
 const projectFile = document.querySelector("#file")
 const projectTitle = document.querySelector("#title")
 const projectImage = document.getElementById("preview");
-const projectpostedSuccess = document.querySelector(".success")
 
 let newProjectData = {}
-export const addPictureToGalleryModal = (AllCategories, arrowLeft, modalContentSubmitPhotos) => {
+export const addProjectModal = (AllCategories, arrowLeft, modalContentSubmitPhotos) => {
 
   modalContentSubmitPhotos.style.display = "flex";
   arrowLeft.style.visibility = "visible";
@@ -53,7 +52,7 @@ const handleValidationClick = (event) => {
   const {cat, title, img} = newProjectData
   try {
     postNewProject(cat, title, img).then (() => {
-      initializeApp.getworks().then (() => {
+      initializeApp.getProjects().then (() => {
         initializeApp.renderOnScreen()
         projectCategoriesList.value = "";
         projectTitle.value = "";
@@ -61,10 +60,7 @@ const handleValidationClick = (event) => {
         projectImage.src = "./assets/images/icone.svg";
         projectImage.alt = "";
         validateButton.setAttribute("disabled", "true");
-        projectpostedSuccess.innerText="Projet ajouté avec sucées"
-        setTimeout (() => {
-          projectpostedSuccess.innerText="";
-        },3000)
+        modalManagement.modalGallery()
       })
     })
   } catch (error) {

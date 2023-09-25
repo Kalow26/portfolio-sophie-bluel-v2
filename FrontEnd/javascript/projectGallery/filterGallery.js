@@ -2,7 +2,7 @@ import { renderGalleryOnScreen } from './renderGalleryOnScreen.js';
 
 
 
-export const filterGallery = (AllWorks, galleryContainer) => {
+export const filterGallery = (allProjects, galleryContainer) => {
     const allFilterButtons = document.querySelectorAll(".btn--filter");
 
     allFilterButtons.forEach((button) => {
@@ -10,10 +10,10 @@ export const filterGallery = (AllWorks, galleryContainer) => {
       button.addEventListener("click", (e) => {
         const buttonId = e.target.name;
         if (buttonId === "") {
-          renderGalleryOnScreen(AllWorks, galleryContainer);
+          renderGalleryOnScreen(allProjects, galleryContainer);
         } else {
-          const filteredArray = AllWorks.filter(
-            (work) => work.categoryId == buttonId
+          const filteredArray = allProjects.filter(
+            (project) => project.categoryId == buttonId
           );
           renderGalleryOnScreen(filteredArray, galleryContainer);
         }

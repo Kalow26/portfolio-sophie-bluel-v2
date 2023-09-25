@@ -5,6 +5,7 @@ import { validateForm } from "./validateForm.js";
 const email = document.querySelector("#Email");
 const password = document.querySelector("#Password");
 const loginForm = document.querySelector("#login-form");
+const loginErrorField = document.querySelector(".alert-connection");
 
 const logUser = async (e) => {
   e.preventDefault();
@@ -26,24 +27,21 @@ const logUser = async (e) => {
   );
 
   if (checkUserPassword && checkUserEmail) {
-    const userData = await login(user);
-    if (userData.token) {
-      sessionStorage.setItem("token", userData.token);
-      sessionStorage.setItem("id", userData.userId);
-      window.location.href = "../index.html";
-    } else {
-      document.querySelector(
-        ".alert-connection"
-      ).innerHTML = `erreur de connection : ${
-        userData.message === undefined
-          ? "Mot de passe incorrect"
-          : userData.message
-      }`;
+
+    try {
+      const userData = await login(user)
+        if (userData.token) {
+          sessionStorage.setItem("token", userData.token);
+          sessionStorage.setItem("id", userData.userId);
+          window.location.href = "../index.html";
+        } else {
+          loginErrorField.innerText = `erreur de connexion :${userData.message === undefined ? `invalid password` : userData.message}`
+        }
+    } catch (error) {
+      loginErrorField.innerText = `erreur de connection : ${error}`;
     }
-  } else {
-    document.querySelector(".alert-connection").innerHTML =
-      "erreur saisie données";
-  }
+   
+};
 };
 
 loginForm.addEventListener("submit", (e) => logUser(e));
