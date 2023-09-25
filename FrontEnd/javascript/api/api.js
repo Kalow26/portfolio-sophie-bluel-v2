@@ -1,4 +1,5 @@
 const serverUrl = "http://localhost:5678/api";
+const token = sessionStorage.getItem("token");
 
 export const login = async (user) => {
     try {
@@ -18,7 +19,6 @@ export const login = async (user) => {
 }
 
 export const deleteProject = async (id) => {
-    const token = sessionStorage.getItem("token");
     try {
       const url =`${serverUrl}/works/${id}`
       const request = await fetch(url, {
@@ -59,7 +59,6 @@ export const getCategories = async () => {
 }
 
 export const postNewProject = async (index, title, imageFile) => {
-    const token = sessionStorage.getItem("token");
     const formData = new FormData();
     formData.append("image", imageFile, imageFile.name);
     formData.append("title", title);

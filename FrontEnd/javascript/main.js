@@ -4,10 +4,9 @@ import { createFilterButtons } from "./projectGallery/createFilterButtons.js";
 import { getWorks, getCategories } from "./api/api.js";
 import { displayGalleryModal } from "./modal/displayGalleryModal.js";
 import {
-  addPictureToGalleryModal,
-  handleValidationClick,
-} from "./modal/addPictureToGalleryModal.js";
-import { handleCloseModal } from "./modal/closeModal.js";
+  addPictureToGalleryModal} from "./modal/addPictureToGalleryModal.js";
+import { handleCloseModalOnClick } from "./modal/closeModal.js";
+
 
 const modifyBtn = document.querySelector(".modify__btn");
 const filterButtonsContainer = document.getElementById("filter__btn");
@@ -22,23 +21,50 @@ const modalContentSubmitPhotos = document.querySelector(
   ".modal__content__container-addwork"
 );
 const arrowLeft = document.querySelector(".fa-arrow-left");
-const validateButton = document.querySelector(".btn--validate");
 const addPhotoButton = document.querySelector(".btn--addphoto");
 
 
+let AllWorks = [];
+let AllCategories = []
+
+export const initializeApp = {
+  getworks: async function () {
+    try {
+      AllWorks = await getWorks();
+    } catch (error) {
+      console.error("Erreur lors de la récupération des travaux :", error);
+    }
+  },
+  getCategories: async function () {
+    try {
+      AllCategories = await getCategories();
+    } catch (error) {
+      console.error("Erreur lors de la récupération des catégories :", error);
+    }
+  },
+
+  renderOnScreen: function () {
+    renderGalleryOnScreen(AllWorks, galleryContainer);
+  },
+  createFilterButtons: function () {
+    createFilterButtons(
+      AllCategories,
+      AllWorks,
+      filterButtonsContainer,
+      galleryContainer
+    );
+  },
+};
 
 
-const AllWorks = await getWorks();
-const AllCategories = await getCategories();
+initializeApp.getworks()
+  .then(() => initializeApp.getCategories())
+  .then(() => {
+    initializeApp.renderOnScreen();
+    initializeApp.createFilterButtons();
+  });
 
-
-createFilterButtons(
-  AllCategories,
-  AllWorks,
-  filterButtonsContainer,
-  galleryContainer
-);
-renderGalleryOnScreen(AllWorks, galleryContainer);
+  
 
 if (sessionStorage.token && sessionStorage.id) {
   handleLogout("token", "id", headerLoginButton, modifyBtn);
@@ -48,7 +74,7 @@ if (sessionStorage.token && sessionStorage.id) {
   modifyBtn.addEventListener("click", () => {
     editionBar.style.display = "block";
     modal.style.display = "flex";
-    handleCloseModal(
+    handleCloseModalOnClick(
       modal,
       editionBar,
       modalContentSubmitPhotos,
@@ -65,19 +91,15 @@ if (sessionStorage.token && sessionStorage.id) {
 
     modalContentGallery.style.display = "none";
     addPictureToGalleryModal(
-      arrowLeft,
       AllCategories,
-      modalContentSubmitPhotos
+      arrowLeft,
+      modalContentSubmitPhotos,
     );
 
     
-    arrowLeft.addEventListener("click", () => {
-      let isGalleryModalVisible = true;
+    arrowLeft.addEventListener("click", () => { 
       modalContentSubmitPhotos.style.display = "none";
-      modalContentGallery.style.display = isGalleryModalVisible ? "flex" : "none";
-      arrowLeft.style.visibility = "hidden";
-      isGalleryModalVisible = !isGalleryModalVisible;
-      validateButton.removeEventListener("click", handleValidationClick);
-    });
+      displayGalleryModal(AllWorks, modalContentGallery, arrowLeft)
+    }, {once:true});
   });
 }

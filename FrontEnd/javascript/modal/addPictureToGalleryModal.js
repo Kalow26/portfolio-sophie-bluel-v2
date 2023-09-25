@@ -1,54 +1,75 @@
 import { postNewProject } from "../api/api.js";
+import { initializeApp } from "../main.js";
 import { previewModalPicture } from "./previewModalPicture.js";
 
+const submitForm = document.querySelector("#submit-project");
+const validateButton = document.querySelector(".btn--validate");
+const projectCategoriesList = document.querySelector("#cat");
+const projectFile = document.querySelector("#file")
+const projectTitle = document.querySelector("#title")
+const projectImage = document.getElementById("preview");
+const projectpostedSuccess = document.querySelector(".success")
 
 let newProjectData = {}
-export const addPictureToGalleryModal = (arrowLeft, AllCategories, modalContentSubmitPhotos) => {
+export const addPictureToGalleryModal = (AllCategories, arrowLeft, modalContentSubmitPhotos) => {
 
   modalContentSubmitPhotos.style.display = "flex";
   arrowLeft.style.visibility = "visible";
 
-  const submitForm = document.querySelector("#submit-project");
-  const validateButton = document.querySelector(".btn--validate");
-  const catList = document.querySelector("#cat");
-  catList.innerHTML = "";
-
-  validateButton.removeEventListener("click", handleValidationClick);
-
-  document
-    .querySelector("#file")
-    .addEventListener("change", (e) => previewModalPicture(e));
+  projectCategoriesList.innerHTML = "";
+  
+  projectFile.addEventListener("change", (e) => previewModalPicture(e));
 
   AllCategories.forEach((cat) => {
     const option = document.createElement("option");
     option.value = cat.id;
     option.innerText = cat.name;
-    catList.appendChild(option);
+    projectCategoriesList.appendChild(option);
   });
 
   submitForm.addEventListener("change", () =>
-    handleFormChange(catList, validateButton)
+    handleFormChange(projectCategoriesList, validateButton)
   );
 
-  function handleFormChange(catList, validateButton) {
-    const catIndex = catList.value;
-    const titleValue = document.querySelector("#title").value.trim();
-    const imageValue = document.querySelector("#file").files[0];
-
-    if (catIndex && titleValue && imageValue) {
-  
-       newProjectData = { cat: catIndex, title: titleValue, img: imageValue };
-
-      validateButton.removeAttribute("disabled");
-      validateButton.addEventListener("click", handleValidationClick);
-    }
-  }
 };
 
-export const handleValidationClick = (event) => {
+
+const handleFormChange = (projectCategoriesList, validateButton) =>  {
+  const catIndex = projectCategoriesList.value;
+  const titleValue = projectTitle.value.trim();
+  const imageValue = projectFile.files[0];
+
+  if (catIndex && titleValue && imageValue) {
+
+     newProjectData = { cat: catIndex, title: titleValue, img: imageValue };
+
+    validateButton.removeAttribute("disabled");
+    validateButton.addEventListener("click", handleValidationClick, {once: true});
+  }
+}
+
+const handleValidationClick = (event) => {
   event.preventDefault();
   const {cat, title, img} = newProjectData
-  postNewProject(cat, title, img);
+  try {
+    postNewProject(cat, title, img).then (() => {
+      initializeApp.getworks().then (() => {
+        initializeApp.renderOnScreen()
+        projectCategoriesList.value = "";
+        projectTitle.value = "";
+        projectFile.value = "";
+        projectImage.src = "./assets/images/icone.svg";
+        projectImage.alt = "";
+        validateButton.setAttribute("disabled", "true");
+        projectpostedSuccess.innerText="Projet ajouté avec sucées"
+        setTimeout (() => {
+          projectpostedSuccess.innerText="";
+        },3000)
+      })
+    })
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 

@@ -1,4 +1,6 @@
 import { deleteProject } from "../api/api.js";
+import { initializeApp } from "../main.js";
+
 
 
 export const displayGalleryModal = (AllWorks, modalContentGallery, arrowLeft) => {
@@ -20,18 +22,32 @@ export const displayGalleryModal = (AllWorks, modalContentGallery, arrowLeft) =>
     picturesContainer.appendChild(figure);
   })
   handleDeleteProject()
-};
+}
 
 
 const handleDeleteProject = () => {
-
   const deleteIcon = document.querySelectorAll(".fa-trash-can");
 
   deleteIcon.forEach ((icon) => {
     icon.addEventListener("click", (e) => {
-        e.preventDefault();
+      e.preventDefault()
       const projectId = icon.getAttribute("name");
-        deleteProject(projectId)
+      try {
+        deleteProject(projectId).then (() => {
+          const figure = icon.closest("figure");
+          if (figure) {
+            figure.remove();
+          }
+          
+      
+          initializeApp.getworks().then(() => {
+          initializeApp.renderOnScreen();
+          })
+        })
+        
+      } catch (error) {
+        console.log(error)
+      }
     })
   });
 

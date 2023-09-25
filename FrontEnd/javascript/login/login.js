@@ -1,6 +1,7 @@
 import { login } from "../api/api.js";
 import { validateForm } from "./validateForm.js";
 
+
 const email = document.querySelector("#Email");
 const password = document.querySelector("#Password");
 const loginForm = document.querySelector("#login-form");
@@ -29,7 +30,7 @@ const logUser = async (e) => {
     if (userData.token) {
       sessionStorage.setItem("token", userData.token);
       sessionStorage.setItem("id", userData.userId);
-      window.location.href = "../../FrontEnd/index.html";
+      window.location.href = "../index.html";
     } else {
       document.querySelector(
         ".alert-connection"
