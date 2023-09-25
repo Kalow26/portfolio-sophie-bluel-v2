@@ -6,7 +6,6 @@ import { initializeApp } from "../main.js";
 export const displayGalleryModal = (AllWorks, modalContentGallery, arrowLeft) => {
   modalContentGallery.style.display="flex";
   const picturesContainer = document.querySelector(".pictures__container");
-  console.log(AllWorks.length)
   arrowLeft.style.visibility = "hidden";
   picturesContainer.innerHTML = "";
 
