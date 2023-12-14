@@ -59,6 +59,7 @@ export const getCategories = async () => {
 
 export const postNewProject = async (index, title, imageFile) => {
     const formData = new FormData();
+    console.log(imageFile, imageFile.name)
     formData.append("image", imageFile, imageFile.name);
     formData.append("title", title);
     formData.append("category", index);

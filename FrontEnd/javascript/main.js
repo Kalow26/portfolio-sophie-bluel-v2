@@ -28,6 +28,7 @@ export const initializeApp = {
       console.error("Erreur lors de la récupération des travaux :", error);
     }
   },
+  
   getCategories: async function () {
     try {
       AllCategories = await getCategories();
@@ -39,6 +40,7 @@ export const initializeApp = {
   renderOnScreen: function () {
     renderGalleryOnScreen(allProjects, galleryContainer);
   },
+  
   createFilterButtons: function () {
     createFilterButtons(
       AllCategories,

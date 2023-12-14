@@ -33,7 +33,7 @@ const logUser = async (e) => {
         if (userData.token) {
           sessionStorage.setItem("token", userData.token);
           sessionStorage.setItem("id", userData.userId);
-          window.location.href = "../index.html";
+          window.location.href = "./index.html";
         } else {
           loginErrorField.innerText = `erreur de connexion :${userData.message === undefined ? `invalid password` : userData.message}`
         }
